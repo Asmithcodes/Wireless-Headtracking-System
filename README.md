@@ -63,19 +63,19 @@ The system provides real-time tracking with approximately 100ms latency at 10Hz 
 ```mermaid
 graph TD
     subgraph TX["🎧 TRANSMITTER (Wearable)"]
-        SENSORS["MPU6500 (Gyro) + MPU6050 (Accel)<br/>I2C: 0x69 + 0x68"]
-        PROCESS["ESP32 Processing<br/>• Calibration & Filtering<br/>• Yaw: Gyro Integration (0-360°)<br/>• Pitch: Accelerometer (-90 to +90°)"]
+        SENSORS("MPU6500 Gyro<br/>MPU6050 Accel<br/>I2C: 0x69 & 0x68")
+        PROCESS("ESP32 Processing<br/>Calibration & Filtering<br/>Yaw: Gyro 0-360°<br/>Pitch: Accel ±90°")
         SENSORS --> PROCESS
     end
 
     subgraph COMM["📡 WIRELESS COMMUNICATION"]
-        PACKET["ESP-NOW Protocol<br/>OrientationData Struct<br/>• float yaw, pitch<br/>• timestamp<br/>10Hz @ ~100m range"]
+        PACKET("ESP-NOW Protocol<br/>OrientationData<br/>yaw, pitch, timestamp<br/>10Hz @ 100m range")
     end
 
     subgraph RX["🤖 RECEIVER (Servo Platform)"]
-        RECEIVE["ESP32 Receiver<br/>• Timeout Detection (1s)<br/>• Exponential Smoothing"]
-        MAPPING["Servo Mapping<br/>• Yaw: 0-180° → 180-0°<br/>• Pitch: ±90° → 180-0°"]
-        SERVOS["Servo Control<br/>GPIO18 (Yaw) + GPIO19 (Pitch)<br/>PWM: 1000-2000μs"]
+        RECEIVE("ESP32 Receiver<br/>Timeout Detection<br/>Exponential Smoothing")
+        MAPPING("Servo Mapping<br/>Yaw: 0-180° → 180-0°<br/>Pitch: ±90° → 180-0°")
+        SERVOS("Servo Control<br/>GPIO18 Yaw<br/>GPIO19 Pitch<br/>PWM: 1-2ms")
         RECEIVE --> MAPPING
         MAPPING --> SERVOS
     end
@@ -83,15 +83,15 @@ graph TD
     TX --> COMM
     COMM --> RX
 
-    style TX fill:#1a1a2e,stroke:#e94560,stroke-width:3px,color:#fff
-    style RX fill:#1a1a2e,stroke:#0f3460,stroke-width:3px,color:#fff
-    style COMM fill:#16213e,stroke:#53a8b6,stroke-width:3px,color:#fff
-    style SENSORS fill:#e94560,stroke:#fff,stroke-width:1px,color:#fff
-    style PROCESS fill:#e94560,stroke:#fff,stroke-width:1px,color:#fff
-    style PACKET fill:#53a8b6,stroke:#fff,stroke-width:1px,color:#000
-    style RECEIVE fill:#0f3460,stroke:#fff,stroke-width:1px,color:#fff
-    style MAPPING fill:#0f3460,stroke:#fff,stroke-width:1px,color:#fff
-    style SERVOS fill:#0f3460,stroke:#fff,stroke-width:1px,color:#fff
+    style TX fill:#1a1a2e,stroke:#e94560,stroke-width:3px,color:#fff,rx:10,ry:10
+    style RX fill:#1a1a2e,stroke:#0f3460,stroke-width:3px,color:#fff,rx:10,ry:10
+    style COMM fill:#16213e,stroke:#53a8b6,stroke-width:3px,color:#fff,rx:10,ry:10
+    style SENSORS fill:#e94560,stroke:#fff,stroke-width:2px,color:#fff
+    style PROCESS fill:#e94560,stroke:#fff,stroke-width:2px,color:#fff
+    style PACKET fill:#53a8b6,stroke:#fff,stroke-width:2px,color:#000
+    style RECEIVE fill:#0f3460,stroke:#fff,stroke-width:2px,color:#fff
+    style MAPPING fill:#0f3460,stroke:#fff,stroke-width:2px,color:#fff
+    style SERVOS fill:#0f3460,stroke:#fff,stroke-width:2px,color:#fff
 ```
 
 The system uses a master-slave architecture where the transmitter continuously broadcasts orientation data, and the receiver listens and actuates the servos accordingly.
