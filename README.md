@@ -1,6 +1,6 @@
 # Wireless Head Tracking System
 
-A real-time wireless head tracking system using ESP32 microcontrollers that captures head orientation and replicates it mechanically using servos. This system uses dual IMU sensors for accurate 2-DOF rotational tracking (yaw and pitch) and ESP-NOW protocol for low-latency wireless communication.
+A real-time wireless head tracking system using ESP32 Microcontrollers that captures head orientation and replicates it mechanically using servos. This system uses dual IMU sensors for accurate 2-DOF rotational tracking (yaw and pitch) and ESP-NOW protocol for low-latency wireless communication.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -258,7 +258,7 @@ Servos automatically center at 90° during receiver initialization. Adjust mecha
 ## Applications
 
 - **Camera Gimbals**: FPV systems, cinema rigs
-- **Robotic Heads**: Interactive robots, animatronics
+- **Robotic Heads**: Interactive robots, animations
 - **VR/AR Tracking**: Head-mounted display orientation
 - **Remote Camera Control**: Surveillance, telepresence
 - **Motion Capture**: Animation reference, biomechanics
