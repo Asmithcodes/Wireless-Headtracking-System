@@ -62,17 +62,17 @@ The system provides real-time tracking with approximately 100ms latency at 10Hz 
 
 ```mermaid
 graph TD
-    subgraph TX["🎧 TRANSMITTER (Wearable)"]
+    subgraph TX["TRANSMITTER"]
         SENSORS("MPU6500 Gyro<br/>MPU6050 Accel<br/>I2C: 0x69 & 0x68")
         PROCESS("ESP32 Processing<br/>Calibration & Filtering<br/>Yaw: Gyro 0-360°<br/>Pitch: Accel ±90°")
         SENSORS --> PROCESS
     end
 
-    subgraph COMM["📡 WIRELESS COMMUNICATION"]
+    subgraph COMM["WIRELESS LINK"]
         PACKET("ESP-NOW Protocol<br/>OrientationData<br/>yaw, pitch, timestamp<br/>10Hz @ 100m range")
     end
 
-    subgraph RX["🤖 RECEIVER (Servo Platform)"]
+    subgraph RX["RECEIVER"]
         RECEIVE("ESP32 Receiver<br/>Timeout Detection<br/>Exponential Smoothing")
         MAPPING("Servo Mapping<br/>Yaw: 0-180° → 180-0°<br/>Pitch: ±90° → 180-0°")
         SERVOS("Servo Control<br/>GPIO18 Yaw<br/>GPIO19 Pitch<br/>PWM: 1-2ms")
