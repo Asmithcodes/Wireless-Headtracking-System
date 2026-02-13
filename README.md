@@ -1,6 +1,6 @@
 # Wireless Head Tracking System
 
-A real-time wireless head tracking system using ESP32 microcontrollers that captures head orientation and replicates it mechanically using servos. This system uses dual IMU sensors for accurate 6-DOF tracking and ESP-NOW protocol for low-latency wireless communication.
+A real-time wireless head tracking system using ESP32 microcontrollers that captures head orientation and replicates it mechanically using servos. This system uses dual IMU sensors for accurate 2-DOF rotational tracking (yaw and pitch) and ESP-NOW protocol for low-latency wireless communication.
 
 ## Table of Contents
 - [Overview](#overview)
@@ -27,7 +27,7 @@ The system provides real-time tracking with approximately 100ms latency at 10Hz 
 ## Features
 
 - **Dual IMU Sensor Fusion**: Combines MPU6500 and MPU6050 sensors for accurate tracking
-- **Yaw Tracking**: 360° continuous rotation tracking using gyroscope integration
+- **Yaw Tracking**: 360° continuous rotation tracking via gyroscope integration (servo output limited to 180°)
 - **Pitch Tracking**: ±90° tilt detection using accelerometer data
 - **Wireless Communication**: ESP-NOW protocol for low-latency data transmission
 - **Gyroscope Calibration**: Automatic offset calibration at startup to minimize drift
@@ -229,7 +229,7 @@ Servos automatically center at 90° during receiver initialization. Adjust mecha
 4. **Normal Operation**
    - Wear or mount transmitter on head
    - Servos will replicate yaw and pitch movements
-   - Yaw range: 0-180° (full rotation tracking, servo limited)
+   - Yaw: Transmitter tracks 0-360° continuously, servo replicates 0-180° mechanically
    - Pitch range: ±90°
 
 ## Troubleshooting
