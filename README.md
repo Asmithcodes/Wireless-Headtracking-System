@@ -1,6 +1,9 @@
-# Wireless Head Tracking System
+# 🧭 Wireless Head Tracking System
 
-A real-time wireless head tracking system using ESP32 Microcontrollers that captures head orientation and replicates it mechanically using servos. This system uses dual IMU sensors for accurate 2-DOF rotational tracking (yaw and pitch) and ESP-NOW protocol for low-latency wireless communication.
+A real-time wireless head tracking system using ESP32 microcontrollers that captures human head orientation and replicates it mechanically using servo motors. The system uses dual IMU sensors for accurate motion sensing and ESP-NOW protocol for fast, low-latency wireless communication.
+
+This project enables precise 2-degree-of-freedom (2-DOF) rotational tracking — yaw (left-right) and pitch (up-down) — allowing real-time motion transfer from a wearable sensing unit to a mechanical actuation unit.
+
 
 ## Table of Contents
 - [Overview](#overview)
