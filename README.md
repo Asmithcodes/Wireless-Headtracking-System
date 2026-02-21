@@ -98,8 +98,7 @@ graph LR
     style SERVOS fill:#243449,stroke:#3d7ab5,stroke-width:1px,color:#b8cedf
 ```
 
-The system uses a master-slave architecture where the transmitter continuously broadcasts orientation data, and the receiver listens and actuates the servos accordingly.
-
+The system uses a transmitter-receiver architecture where the transmitter continuously broadcasts orientation data, and the receiver listens and actuates the servos accordingly.
 ## How It Works
 
 ### Transmitter Operation
