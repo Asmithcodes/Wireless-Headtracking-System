@@ -17,6 +17,7 @@ This project enables precise 2-degree-of-freedom (2-DOF) rotational tracking —
 - [Usage](#usage)
 - [Troubleshooting](#troubleshooting)
 - [Applications](#applications)
+- [Contributors](#contributors)
 - [License](#license)
 
 ## Overview
@@ -64,37 +65,37 @@ The system provides real-time tracking with approximately 100ms latency at 10Hz 
 ### Block Diagram
 
 ```mermaid
-graph TD
-    subgraph TX["TRANSMITTER"]
-        SENSORS("MPU6500 Gyro<br/>MPU6050 Accel<br/>I2C: 0x69 & 0x68")
-        PROCESS("ESP32 Processing<br/>Calibration & Filtering<br/>Yaw: Gyro 0-360°<br/>Pitch: Accel ±90°")
-        SENSORS --> PROCESS
+graph LR
+    subgraph TX["  TRANSMITTER  "]
+        direction TB
+        IMU["MPU6500 + MPU6050\nGyro & Accelerometer\nI²C · 0x69 & 0x68"]
+        MCU_TX["ESP32\nCalibration · Filtering\nYaw & Pitch Fusion"]
+        IMU --> MCU_TX
     end
 
-    subgraph COMM["WIRELESS LINK"]
-        PACKET("ESP-NOW Protocol<br/>OrientationData<br/>yaw, pitch, timestamp<br/>10Hz @ 100m range")
+    subgraph LINK["  RF LINK  "]
+        ESP_NOW["ESP-NOW Protocol\nOrientationData Struct\n10 Hz · ~100 m range"]
     end
 
-    subgraph RX["RECEIVER"]
-        RECEIVE("ESP32 Receiver<br/>Timeout Detection<br/>Exponential Smoothing")
-        MAPPING("Servo Mapping<br/>Yaw: 0-180° → 180-0°<br/>Pitch: ±90° → 180-0°")
-        SERVOS("Servo Control<br/>GPIO18 Yaw<br/>GPIO19 Pitch<br/>PWM: 1-2ms")
-        RECEIVE --> MAPPING
-        MAPPING --> SERVOS
+    subgraph RX["  RECEIVER  "]
+        direction TB
+        MCU_RX["ESP32\nExp. Smoothing\nTimeout Detection"]
+        MAPPER["Servo Mapper\nYaw: 0–360° → 180–0°\nPitch: ±90° → 180–0°"]
+        SERVOS["Servo Motors\nYaw · GPIO 18\nPitch · GPIO 19"]
+        MCU_RX --> MAPPER --> SERVOS
     end
 
-    TX --> COMM
-    COMM --> RX
+    TX ==> LINK ==> RX
 
-    style TX fill:#1a1a2e,stroke:#e94560,stroke-width:3px,color:#fff,rx:10,ry:10
-    style RX fill:#1a1a2e,stroke:#0f3460,stroke-width:3px,color:#fff,rx:10,ry:10
-    style COMM fill:#16213e,stroke:#53a8b6,stroke-width:3px,color:#fff,rx:10,ry:10
-    style SENSORS fill:#e94560,stroke:#fff,stroke-width:2px,color:#fff
-    style PROCESS fill:#e94560,stroke:#fff,stroke-width:2px,color:#fff
-    style PACKET fill:#53a8b6,stroke:#fff,stroke-width:2px,color:#000
-    style RECEIVE fill:#0f3460,stroke:#fff,stroke-width:2px,color:#fff
-    style MAPPING fill:#0f3460,stroke:#fff,stroke-width:2px,color:#fff
-    style SERVOS fill:#0f3460,stroke:#fff,stroke-width:2px,color:#fff
+    style TX fill:#1e2d3d,stroke:#3d7ab5,stroke-width:2px,color:#dce8f5
+    style LINK fill:#162030,stroke:#2e5f8a,stroke-width:2px,color:#dce8f5
+    style RX fill:#1e2d3d,stroke:#3d7ab5,stroke-width:2px,color:#dce8f5
+    style IMU fill:#243449,stroke:#3d7ab5,stroke-width:1px,color:#b8cedf
+    style MCU_TX fill:#243449,stroke:#3d7ab5,stroke-width:1px,color:#b8cedf
+    style ESP_NOW fill:#1a2c3e,stroke:#2e6a9e,stroke-width:1px,color:#9fbdd1
+    style MCU_RX fill:#243449,stroke:#3d7ab5,stroke-width:1px,color:#b8cedf
+    style MAPPER fill:#243449,stroke:#3d7ab5,stroke-width:1px,color:#b8cedf
+    style SERVOS fill:#243449,stroke:#3d7ab5,stroke-width:1px,color:#b8cedf
 ```
 
 The system uses a master-slave architecture where the transmitter continuously broadcasts orientation data, and the receiver listens and actuates the servos accordingly.
@@ -267,6 +268,12 @@ Servos automatically center at 90° during receiver initialization. Adjust mecha
 - **Motion Capture**: Animation reference, biomechanics
 - **Accessibility Devices**: Head-controlled interfaces
 - **Gaming**: Immersive head-tracking peripherals
+
+## Contributors
+
+This project was built by:
+
+[![Contributors](https://contrib.rocks/image?repo=Asmithcodes/Wireless-Headtracking-System)](https://github.com/Asmithcodes/Wireless-Headtracking-System/graphs/contributors)
 
 ## License
 
